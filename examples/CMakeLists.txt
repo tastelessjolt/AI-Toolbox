@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.9) # CMP0069 NEW
 
+if (MAKE_RND)
+    add_executable(grid_world RnD/grid_world.cpp)
+    target_link_libraries(grid_world AIToolboxMDP)
+    set_target_properties(grid_world PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${LTO_SUPPORTED})
+endif()
+
 if (MAKE_MDP)
     add_executable(tiger_antelope MDP/tiger_antelope.cpp)
     target_link_libraries(tiger_antelope AIToolboxMDP)

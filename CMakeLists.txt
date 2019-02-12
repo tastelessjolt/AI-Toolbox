@@ -13,7 +13,8 @@ project (AIToolbox LANGUAGES CXX)
 # MAKE_PYTHON:   Builds Python bindings for the compiled core library
 # MAKE_TESTS:    Builds the library's tests for the compiled core library
 # MAKE_EXAMPLES: Builds the library's examples using the compiled core library
-
+# MAKE_RND:      Builds the library's examples/RnD/grid-world.cpp using the compiled core library
+# MAKE_LIBS
 # NOTE TO COMPILE ON WINDOWS:
 #
 # On Windows it is generally much less practical to actually look here for
@@ -77,7 +78,7 @@ endif()
 ##############################
 
 # Default is to build everything
-if (NOT MAKE_ALL AND NOT MAKE_LIB AND NOT MAKE_MDP AND NOT MAKE_FMDP AND NOT MAKE_POMDP)
+if (NOT MAKE_ALL AND NOT MAKE_LIB AND NOT MAKE_MDP AND NOT MAKE_FMDP AND NOT MAKE_POMDP AND NOT MAKE_RND)
     set(MAKE_ALL    1)
 endif()
 
@@ -114,6 +115,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 # Print what we're actually doing
 set(MAP_MAKE_MDP        "# Building MDP")
+set(MAP_MAKE_RND        "# Building RnD")
 set(MAP_MAKE_FMDP       "# Building Factored MDP")
 set(MAP_MAKE_POMDP      "# Building POMDP")
 set(MAP_MAKE_PYTHON     "# Building Python bindings")
@@ -123,7 +125,7 @@ set(MAP_MAKE_EXAMPLES   "# Building Examples")
 message("")
 message("Build type: " ${CMAKE_BUILD_TYPE})
 message("Logging is " ${LOGGING_STATUS})
-foreach(v MAKE_MDP;MAKE_FMDP;MAKE_POMDP;MAKE_PYTHON;MAKE_TESTS;MAKE_EXAMPLES)
+foreach(v MAKE_MDP;MAKE_FMDP;MAKE_POMDP;MAKE_PYTHON;MAKE_TESTS;MAKE_EXAMPLES;MAKE_RND)
     if (${${v}})
         message(${MAP_${v}})
     endif()
@@ -194,6 +196,6 @@ if (MAKE_TESTS)
 endif()
 
 # If enabled, add Python bindings
-if (MAKE_EXAMPLES)
+if (MAKE_EXAMPLES OR MAKE_RND)
     add_subdirectory(${PROJECT_SOURCE_DIR}/examples)
 endif()
